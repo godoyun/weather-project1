@@ -33,15 +33,15 @@ if city:
         st.subheader("👗 추천 옷차림")
         st.markdown(f"✅ {recommendation}")
 
-        # (선택) 이미지 출력
+        # 이미지 출력
         st.subheader("🖼️ 이미지로 보기")
-        try:
-            for item in recommendation.replace(",", "").split():
-                img_path = f"images/{item.strip()}.png"
+        for item in recommendation.split(","):
+            key = item.strip()
+            img_path = f"images/{key}.png"
+            try:
                 img = Image.open(img_path)
-                st.image(img, caption=item.strip(), width=150)
-        except:
-            st.warning("일부 이미지가 없습니다.")
+                st.image(img, caption=key, width=150)
+            except:
+                st.warning(f"{key} 이미지가 없습니다.")
     else:
         st.error("날씨 정보를 불러오지 못했습니다.")
-
