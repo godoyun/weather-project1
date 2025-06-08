@@ -18,7 +18,6 @@ if __name__ == "__main__":
         wind = float(df.loc[0, '풍속'])
         desc = str(df.loc[0, '날씨 상태'])
         humidity = int(df.loc[0, '습도'])
-
         month = datetime.now().month
 
         clothes = recommend_clothing(temp, wind, desc, humidity, month)

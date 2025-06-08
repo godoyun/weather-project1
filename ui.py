@@ -1,9 +1,21 @@
 import streamlit as st
 from get_weather import get_weather
 from recommend import recommend_clothing
+from utils import get_korean_city_name
 from PIL import Image
 from datetime import datetime
-from utils import get_korean_city_name
+
+def get_korean_season(month: int, lat: float) -> tuple[str, str]:
+    if lat < 0:
+        if month in [3, 4, 5]: return "가을", "🍂"
+        elif month in [6, 7, 8]: return "겨울", "❄️"
+        elif month in [9, 10, 11]: return "봄", "🌸"
+        else: return "여름", "☀️"
+    else:
+        if month in [3, 4, 5]: return "봄", "🌸"
+        elif month in [6, 7, 8]: return "여름", "☀️"
+        elif month in [9, 10, 11]: return "가을", "🍂"
+        else: return "겨울", "❄️"
 
 st.set_page_config(page_title="날씨 옷차림 추천", page_icon="☁️")
 st.title("☁️ 날씨 기반 옷차림 추천 시스템")
@@ -28,9 +40,12 @@ if city:
         humidity = int(df.loc[0, '습도'])
         wind = float(df.loc[0, '풍속'])
         desc = df.loc[0, '날씨 상태']
+        lat = float(df.loc[0, '위도'])
+        month = datetime.now().month
+        season, season_icon = get_korean_season(month, lat)
 
         # 💡 날씨 정보 카드 박스
-        st.markdown(f"""<div style='background-color:#f0f8ff;padding:20px;border-radius:12px'><h2>📍 {kor_name}</h2><p><b>⛅ 날씨 상태 : </b> {desc}</p><p><b>🕒 조회 시각 : </b> {now}</p><div style='display:flex;flex-wrap:wrap;gap:10px;margin-top:15px'><div style='flex:1;min-width:120px;background-color:#ffffff;border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center'><div style='font-size:28px'>🌡️</div><div style='font-size:16px;font-weight:bold;margin-top:4px'>현재 기온</div><p style='font-size:20px;margin-top:8px'><b>{temp}℃</b></p></div><div style='flex:1;min-width:120px;background-color:#ffffff;border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center'><div style='font-size:28px'>🤒</div><div style='font-size:16px;font-weight:bold;margin-top:4px'>체감 기온</div><p style='font-size:20px;margin-top:8px'><b>{feels_like}℃</b></p></div><div style='flex:1;min-width:120px;background-color:#ffffff;border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center'><div style='font-size:28px'>💧</div><div style='font-size:16px;font-weight:bold;margin-top:4px'>습도</div><p style='font-size:20px;margin-top:8px'><b>{humidity}%</b></p></div><div style='flex:1;min-width:120px;background-color:#ffffff;border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center'><div style='font-size:28px'>🍃</div><div style='font-size:16px;font-weight:bold;margin-top:4px'>풍속</div><p style='font-size:20px;margin-top:8px'><b>{wind} m/s</b></p></div></div></div>""", unsafe_allow_html=True)
+        st.markdown(f"""<div style='background-color:#f0f8ff;padding:20px;border-radius:12px'><h2>📍 {kor_name}</h2><p><b>{season_icon} </b> {season}</p><p><b>⛅ 날씨 상태 : </b> {desc}</p><p><b>🕒 조회 시각 : </b> {now}</p><div style='display:flex;flex-wrap:wrap;gap:10px;margin-top:15px'><div style='flex:1;min-width:120px;background-color:#ffffff;border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center'><div style='font-size:28px'>🌡️</div><div style='font-size:16px;font-weight:bold;margin-top:4px'>현재 기온</div><p style='font-size:20px;margin-top:8px'><b>{temp}℃</b></p></div><div style='flex:1;min-width:120px;background-color:#ffffff;border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center'><div style='font-size:28px'>🤒</div><div style='font-size:16px;font-weight:bold;margin-top:4px'>체감 기온</div><p style='font-size:20px;margin-top:8px'><b>{feels_like}℃</b></p></div><div style='flex:1;min-width:120px;background-color:#ffffff;border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center'><div style='font-size:28px'>💧</div><div style='font-size:16px;font-weight:bold;margin-top:4px'>습도</div><p style='font-size:20px;margin-top:8px'><b>{humidity}%</b></p></div><div style='flex:1;min-width:120px;background-color:#ffffff;border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center'><div style='font-size:28px'>🍃</div><div style='font-size:16px;font-weight:bold;margin-top:4px'>풍속</div><p style='font-size:20px;margin-top:8px'><b>{wind} m/s</b></p></div></div></div>""", unsafe_allow_html=True)
 
         # 여백 추가
         st.markdown("<div style='margin-top:20px'></div>", unsafe_allow_html=True)

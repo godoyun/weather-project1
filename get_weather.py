@@ -30,7 +30,9 @@ def get_weather(city):
             '습도': data['main']['humidity'],
             '풍속': data['wind']['speed'],
             '날씨 상태': data['weather'][0]['description'],
-            '요청 시각': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            '요청 시각': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            '위도': data['coord']['lat'],
+            '경도': data['coord']['lon']
         }
 
         return pd.DataFrame([weather_info])
