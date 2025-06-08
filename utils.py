@@ -64,39 +64,6 @@ def get_korean_city_name(english_name):
         # 읍/면 단위 (실사용 예시 중심)
         "iljuk": "일죽면",
         "ando": "안도면",
-
-        # 🇯🇵 일본
-        "tokyo": "도쿄",
-        "osaka": "오사카",
-        "kyoto": "교토",
-        "nagoya": "나고야",
-        "fukuoka": "후쿠오카",
-        "sapporo": "삿포로",
-
-        # 🇺🇸 미국
-        "new york": "뉴욕",
-        "los angeles": "로스앤젤레스",
-        "chicago": "시카고",
-        "san francisco": "샌프란시스코",
-        "seattle": "시애틀",
-        "boston": "보스턴",
-        "houston": "휴스턴",
-        "atlanta": "애틀랜타",
-
-        # 🇪🇺 유럽/기타
-        "london": "런던",
-        "paris": "파리",
-        "berlin": "베를린",
-        "rome": "로마",
-        "madrid": "마드리드",
-        "amsterdam": "암스테르담",
-        "vienna": "빈",
-        "bangkok": "방콕",
-        "singapore": "싱가포르",
-        "sydney": "시드니",
-        "toronto": "토론토",
-        "vancouver": "밴쿠버",
-        "istanbul": "이스탄불"
     }
 
     return mapping.get(cleaned, english_name)
