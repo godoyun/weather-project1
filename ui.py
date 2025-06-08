@@ -14,12 +14,16 @@ if city:
     df = get_weather(city)
 
     if df is not None:
+        # 입력 시각 저장
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         st.subheader(f"🌍 지역: {df.loc[0, '지역명']}")
         st.write(f"🌡️ 현재 기온: {df.loc[0, '현재 기온']}℃")
         st.write(f"🤒 체감 온도: {df.loc[0, '체감 온도']}℃")
         st.write(f"💧 습도: {df.loc[0, '습도']}%")
         st.write(f"🍃 풍속: {df.loc[0, '풍속']} m/s")
         st.write(f"⛅ 날씨 상태: {df.loc[0, '날씨 상태']}")
+        st.write(f"🕒 입력 시각: {now}")
 
         # 추천 옷차림
         temp = float(df.loc[0, '현재 기온'])
